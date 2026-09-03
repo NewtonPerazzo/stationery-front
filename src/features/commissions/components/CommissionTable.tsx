@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 
 import type { CommissionReport } from '../../../types/api'
+import { CommissionSellerRow } from './CommissionSellerRow'
 
 interface CommissionTableProps {
   report: CommissionReport
@@ -26,20 +27,17 @@ export function CommissionTable({ report }: CommissionTableProps) {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell />
             <TableCell>Vendedor</TableCell>
             <TableCell align="right">Comissão</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {report.sellers.map((seller) => (
-            <TableRow key={seller.seller_id}>
-              <TableCell>{seller.seller_name}</TableCell>
-              <TableCell align="right">
-                {currencyFormatter.format(Number(seller.commission_total))}
-              </TableCell>
-            </TableRow>
+            <CommissionSellerRow key={seller.seller_id} seller={seller} />
           ))}
           <TableRow>
+            <TableCell />
             <TableCell>
               <Typography sx={{ fontWeight: 700 }}>Total geral</Typography>
             </TableCell>

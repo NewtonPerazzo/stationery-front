@@ -45,10 +45,19 @@ export interface SalePayload {
   }>
 }
 
+export interface ProductCommissionDetail {
+  product_id: number
+  product_name: string
+  quantity: number
+  total_amount: string
+  commission_total: string
+}
+
 export interface SellerCommission {
   seller_id: number
   seller_name: string
   commission_total: string
+  items: ProductCommissionDetail[]
 }
 
 export interface CommissionReport {
