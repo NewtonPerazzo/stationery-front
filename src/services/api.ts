@@ -14,8 +14,13 @@ const api = axios.create({
   timeout: 10_000,
 })
 
-export async function listSales(): Promise<Sale[]> {
-  const { data } = await api.get<Sale[]>('/sales/')
+export async function listSales(
+  search = '',
+  ordering = 'invoice_number',
+): Promise<Sale[]> {
+  const { data } = await api.get<Sale[]>('/sales/', {
+    params: { search, ordering },
+  })
   return data
 }
 
@@ -52,11 +57,15 @@ export async function deleteSale(saleId: number): Promise<void> {
 export async function getCommissionReport(
   startDate: string,
   endDate: string,
+  search = '',
+  ordering = 'seller_name',
 ): Promise<CommissionReport> {
   const { data } = await api.get<CommissionReport>('/commissions/', {
     params: {
       start_date: startDate,
       end_date: endDate,
+      search,
+      ordering,
     },
   })
   return data

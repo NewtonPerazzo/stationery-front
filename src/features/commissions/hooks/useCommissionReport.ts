@@ -11,12 +11,22 @@ export function useCommissionReport() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const search = async (startDate: string, endDate: string) => {
+  const search = async (
+    startDate: string,
+    endDate: string,
+    sellerSearch: string,
+    ordering: string,
+  ) => {
     setLoading(true)
     setError('')
 
     try {
-      const data = await getCommissionReport(startDate, endDate)
+      const data = await getCommissionReport(
+        startDate,
+        endDate,
+        sellerSearch,
+        ordering,
+      )
       setReport(data)
     } catch (requestError) {
       setReport(null)

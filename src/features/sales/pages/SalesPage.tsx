@@ -13,6 +13,10 @@ import { useState } from 'react'
 import { getApiErrorMessage } from '../../../services/api'
 import type { Sale } from '../../../types/api'
 import { SaleFormDialog } from '../components/SaleFormDialog'
+import {
+  SalesFilters,
+  type SalesOrdering,
+} from '../components/SalesFilters'
 import { SalesTable } from '../components/SalesTable'
 import { useSales } from '../hooks/useSales'
 
@@ -25,12 +29,16 @@ export function SalesPage() {
     loading,
     error,
     loadData,
+    querySales,
     saveSale,
     removeSale,
   } = useSales()
   const [formOpen, setFormOpen] = useState(false)
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null)
   const [feedback, setFeedback] = useState('')
+  const [search, setSearch] = useState('')
+  const [ordering, setOrdering] =
+    useState<SalesOrdering>('invoice_number')
 
   const openNewSale = () => {
     setSelectedSale(null)
@@ -47,6 +55,7 @@ export function SalesPage() {
 
     try {
       await removeSale(sale.id)
+      await querySales(search, ordering)
       setFeedback('Venda excluída.')
     } catch (requestError) {
       setFeedback(getApiErrorMessage(requestError))
@@ -83,6 +92,14 @@ export function SalesPage() {
         </Alert>
       ) : null}
 
+      <SalesFilters
+        search={search}
+        ordering={ordering}
+        onSearchChange={setSearch}
+        onOrderingChange={setOrdering}
+        onSubmit={() => querySales(search, ordering)}
+      />
+
       {loading ? (
         <Box sx={{ display: 'grid', placeItems: 'center', py: 8 }}>
           <CircularProgress />
@@ -104,6 +121,7 @@ export function SalesPage() {
           onClose={() => setFormOpen(false)}
           onSave={async (saleId, payload) => {
             await saveSale(saleId, payload)
+            await querySales(search, ordering)
             setFeedback(saleId === null ? 'Venda criada.' : 'Venda atualizada.')
           }}
         />

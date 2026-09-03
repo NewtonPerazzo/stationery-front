@@ -84,12 +84,23 @@ export function useSales() {
       await updateSale(saleId, payload)
     }
 
-    await loadData()
   }
 
   const removeSale = async (saleId: number) => {
     await deleteSale(saleId)
-    await loadData()
+  }
+
+  const querySales = async (search: string, ordering: string) => {
+    setLoading(true)
+    setError('')
+
+    try {
+      setSales(await listSales(search, ordering))
+    } catch (requestError) {
+      setError(getApiErrorMessage(requestError))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return {
@@ -100,6 +111,7 @@ export function useSales() {
     loading,
     error,
     loadData,
+    querySales,
     saveSale,
     removeSale,
   }
