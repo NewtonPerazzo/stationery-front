@@ -51,6 +51,7 @@ export interface ProductCommissionDetail {
   quantity: number
   total_amount: string
   commission_total: string
+  commission_percentage: string
 }
 
 export interface SellerCommission {

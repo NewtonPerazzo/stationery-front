@@ -21,6 +21,10 @@ const currencyFormatter = new Intl.NumberFormat('pt-BR', {
   currency: 'BRL',
 })
 
+const percentageFormatter = new Intl.NumberFormat('pt-BR', {
+  maximumFractionDigits: 2,
+})
+
 export function CommissionSellerRow({ seller }: CommissionSellerRowProps) {
   const [open, setOpen] = useState(false)
   const hasItems = seller.items.length > 0
@@ -53,14 +57,19 @@ export function CommissionSellerRow({ seller }: CommissionSellerRowProps) {
             >
               <TableBody>
                 {seller.items.map((item) => (
-                  <TableRow key={item.product_id}>
+                  <TableRow
+                    key={`${item.product_id}-${item.commission_percentage}`}
+                  >
                     <TableCell sx={{ pl: 10 }}>{item.product_name}</TableCell>
                     <TableCell align="right">{item.quantity}</TableCell>
                     <TableCell align="right">
                       {currencyFormatter.format(Number(item.total_amount))}
                     </TableCell>
                     <TableCell align="right">
-                      {currencyFormatter.format(Number(item.commission_total))}
+                      {currencyFormatter.format(Number(item.commission_total))}{' '}
+                      ({percentageFormatter.format(
+                        Number(item.commission_percentage),
+                      )}%)
                     </TableCell>
                   </TableRow>
                 ))}
