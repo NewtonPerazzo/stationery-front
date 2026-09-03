@@ -22,12 +22,12 @@ export function AppLayout() {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
-          <ReceiptLongOutlinedIcon sx={{ mr: 1.5 }} />
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <ReceiptLongOutlinedIcon sx={{ mr: 0.5 }} />
+          <Typography variant="h6" sx={{ flexGrow: 1, mr: 0.5 }}>
             Stationery
           </Typography>
 
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row">
             {navigation.map((item) => (
               <Button
                 key={item.path}

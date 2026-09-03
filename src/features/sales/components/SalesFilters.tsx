@@ -48,7 +48,7 @@ export function SalesFilters(props: SalesFiltersProps) {
         <MenuItem value="-total_amount">Maior venda</MenuItem>
         <MenuItem value="total_amount">Menor venda</MenuItem>
       </TextField>
-      <Button type="submit" variant="outlined" startIcon={<SearchIcon />}>
+      <Button type="submit" variant="outlined" sx={{ px: 3, py: 1 }} startIcon={<SearchIcon />}>
         Aplicar
       </Button>
     </Stack>
