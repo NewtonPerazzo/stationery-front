@@ -41,6 +41,21 @@ pnpm preview
 
 A URL da API é fornecida pela variável `VITE_API_BASE_URL`. Use `.env.example` como referência e não versione o arquivo `.env` local.
 
+## Produção na Vercel
+
+No projeto do frontend na Vercel, configure a variável de produção:
+
+```dotenv
+VITE_API_BASE_URL=https://stationery-api.vercel.app/api
+```
+
+Depois de criar ou alterar uma variável `VITE_*`, faça um novo deployment, pois
+o Vite incorpora seu valor durante o build.
+
+O arquivo `vercel.json` redireciona rotas do React Router para `index.html`.
+Assim, `/sales` e `/commissions` também funcionam quando acessadas ou atualizadas
+diretamente no navegador.
+
 ## Organização planejada
 
 A interface será organizada por funcionalidades (`sales` e `commissions`) e usará Atomic Design para componentes compartilhados. Componentes básicos como botões e campos serão usados diretamente do Material UI; componentes próprios serão criados apenas quando acrescentarem composição ou comportamento.
